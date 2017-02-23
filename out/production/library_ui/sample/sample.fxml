@@ -1,21 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:aaa="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sample.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns:aaa="http://javafx.com/javafx/8" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <center>
-      <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" prefHeight="175.0" prefWidth="500.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="titleTableColumn" prefWidth="75.0" text="Title" />
           <TableColumn fx:id="authorTableColumn" prefWidth="75.0" text="Author" />
           <TableColumn fx:id="isbnTableColumn" prefWidth="75.0" text="ISBN" />
-          <TableColumn fx:id="publicationDateTableColumn" prefWidth="124.0" text="publication date" />
-          <TableColumn fx:id="issueNumberTableColumn" minWidth="8.0" prefWidth="135.0" text="issue number" />
+          <TableColumn fx:id="publicationDateTableColumn" prefWidth="100.0" text="publication date" />
+          <TableColumn fx:id="issueNumberTableColumn" minWidth="8.0" prefWidth="100.0" text="issue number" />
         </columns>
       </TableView>
    </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <right>
+      <AnchorPane prefHeight="475.0" prefWidth="325.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="475.0" prefWidth="325.0">
+               <children>
+                  <Label text="Add book">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <HBox prefHeight="25.0" prefWidth="325.0">
+                     <children>
+                        <Label text="Title" />
+                        <TextField fx:id="titleTF" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Author" />
+                        <TextField fx:id="authorTF" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="200.0">
+                     <children>
+                        <Label text="ISBN" />
+                        <TextField fx:id="isbnTF" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="110.0" prefHeight="25.0" prefWidth="325.0">
+                     <children>
+                        <Label text="pub. date" />
+                        <TextField fx:id="publicationDateTF" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="110.0" prefHeight="25.0" prefWidth="200.0">
+                     <children>
+                        <Label text="issue" />
+                        <TextField fx:id="issueTF" />
+                     </children>
+                  </HBox>
+                  <Button mnemonicParsing="false" onMouseClicked="#addButtonClicked" text="Add" />
+               </children>
+            </VBox>
+         </children></AnchorPane>
+   </right>
 </BorderPane>

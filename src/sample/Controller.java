@@ -7,12 +7,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable{
+
+    public TextField issueTF;
+    public TextField titleTF;
+    public TextField authorTF;
+    public TextField isbnTF;
+    public TextField publicationDateTF;
+
+
+    private ObservableList<Book> books = FXCollections.observableArrayList();
 
     @FXML private TableView <Book> tableView;
     @FXML private TableColumn <Book, String> titleTableColumn;
@@ -34,9 +45,26 @@ public class Controller implements Initializable{
     }
 
     private ObservableList<Book> getBooks() {
-        ObservableList<Book> books = FXCollections.observableArrayList();
-        //String title, String author, String isbn, String publicationDate, int issueNumber
+        books.add(new Book("Portret szpiega", "Henryk Piecuch", "83-11-07007-5", "1984", 1));
+        books.add(new Book("Portret szpiega", "Henryk Piecuch", "83-11-07007-5", "1984", 1));
         books.add(new Book("Portret szpiega", "Henryk Piecuch", "83-11-07007-5", "1984", 1));
         return books;
+    }
+
+    public void addButtonClicked(MouseEvent mouseEvent) {
+        String title = titleTF.getText();
+        String author = authorTF.getText();
+        String publicationDate = publicationDateTF.getText();
+        String isbn = isbnTF.getText();
+        String issueString = issueTF.getText();
+        int issue =  Integer.parseInt(issueString);
+
+        books.add(new Book(title, author, publicationDate, isbn, issue));
+
+        titleTF.clear();
+        authorTF.clear();
+        publicationDateTF.clear();
+        isbnTF.clear();
+        issueTF.clear();
     }
 }
