@@ -1,0 +1,1 @@
+Book{title='asd', author='asd', isbn='ads', publicationDate='ads', issueNumber=1}Book{title='bv', author='xcv', isbn='xv', publicationDate='xvc', issueNumber=2}Book{title='c', author='cc', isbn='zz', publicationDate='zz', issueNumber=3}
