@@ -1,6 +1,0 @@
-Book{title='sdf', author='sdf', isbn='sf', publicationDate='sfd', issueNumber=1}
-Book{title='sd', author='ad', isbn='ad', publicationDate='ad', issueNumber=2}
-Book{title='dad', author='ad', isbn='ad2', publicationDate='ad', issueNumber=2}
-Book{author='dsf', title='sdf', publicationDate='sfd', city='sf', publisher='sf', issueNumber=1, condition='ad'}
-Book{author='da', title='ad', publicationDate='ad', city='df', publisher='f', issueNumber=1, condition='ee'}
-Book{author='a', title='d', publicationDate='f', city='g', publisher='e', issueNumber=1, condition='df'}

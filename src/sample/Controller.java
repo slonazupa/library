@@ -11,16 +11,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable{
@@ -35,7 +33,7 @@ public class Controller implements Initializable{
 
 
     private ObservableList<Book> books = FXCollections.observableArrayList();
-    private String filePathString = "database.txt";
+    private String filePathString = "database.bin";
 
     @FXML private TableView <Book> tableView;
     @FXML private TableColumn <Book, String> authorTC;
@@ -73,25 +71,34 @@ public class Controller implements Initializable{
         String title = titleTF.getText();
         String city = cityTF.getText();
         String publisher = publisherTF.getText();
-        String publicationDate = publicationDateTF.getText();
+        String publicationDateString = publicationDateTF.getText();
+        int publicationDate = Integer.parseInt(publicationDateString);
         String condition = conditionTF.getText();
         String issueString = issueTF.getText();
         int issue =  Integer.parseInt(issueString);
 
         //String author, String title, String city, String publisher, String publicationDate, int issueNumber, String condition
-        books.add(new Book(author, title, city, publisher, publicationDate, issue, condition));
-        Path path = Paths.get(filePathString);
-
-        //new line
-        String newLine = System.lineSeparator();
+        //books.add(new Book(author, title, city, publisher, publicationDate, issue, condition));
 
         try {
-            Files.write(path, books.get(books.size()-1).toString().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-            Files.write(path, newLine.getBytes(),StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
+            File file = new File(filePathString);
+            file.createNewFile(); // if file already exists will do nothing
+            FileOutputStream f = new FileOutputStream(file, true);
+            ObjectOutputStream o = new ObjectOutputStream(f);
+
+            Book book = new Book(author, title, city, publisher, publicationDate, issue, condition);
+            books.add(book);
+            o.writeObject(book);
+            o.close();
+            f.close();
+
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Error initializing stream");
+        }
 
         authorTF.clear();
         titleTF.clear();
@@ -105,16 +112,31 @@ public class Controller implements Initializable{
     //opens the file where you can save information about books. If the file does not exist create it
     private void openFile(){
 
-        Path path = Paths.get(filePathString);
-        try (InputStream in = Files.newInputStream(path);
-             BufferedReader reader =
-                     new BufferedReader(new InputStreamReader(in))) {
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+        //Path path = Paths.get(filePathString);
+        try {
+
+            FileInputStream fi = new FileInputStream(new File(filePathString));
+            //ObjectInputStream oi = new ObjectInputStream(fi);
+            ObjectInputStream oi;// = new ObjectInputStream(fi);
+
+            while (fi.available()>0){
+                oi = new ObjectInputStream(fi);
+                Book book = (Book) oi.readObject();
+                books.add(book);
+                System.out.println(book);
             }
-        } catch (IOException x) {
-            System.err.println(x);
+
+            //oi.close();
+            fi.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error initializing stream");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
     }
 }

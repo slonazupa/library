@@ -1,29 +1,31 @@
 package sample;
 
+import java.io.Serializable;
+
 /**
  * Created by Marek on 2017-02-21.
  */
-public class Book {
+public class Book implements Serializable{
 
     private String author;
     private String title;
-    private String publicationDate;
+    private int publicationDate;
     private String city;
     private String publisher;
     private int issue;
     private String condition;
 
-    public Book() {
+    public Book(String author, String title, String city, String publisher, String publicationDate, int issueNumber, String condition) {
         this.author = "";
         this.title = "";
         this.city = "";
         this.publisher = "";
-        this.publicationDate = "";
+        this.publicationDate = 0;
         this.issue = 0;
         this.condition = "";
     }
 
-    public Book(String author, String title, String city, String publisher, String publicationDate, int issueNumber, String condition) {
+    public Book(String author, String title, String city, String publisher, int publicationDate, int issueNumber, String condition) {
         this.author = author;
         this.title = title;
         this.city = city;
@@ -49,11 +51,11 @@ public class Book {
         this.author = author;
     }
 
-    public String getPublicationDate() {
+    public int getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(String publicationDate) {
+    public void setPublicationDate(int publicationDate) {
         this.publicationDate = publicationDate;
     }
 
@@ -94,7 +96,7 @@ public class Book {
         return "Book{" +
                 "author='" + author + '\'' +
                 ", title='" + title + '\'' +
-                ", publicationDate='" + publicationDate + '\'' +
+                ", publicationDate='" + publicationDate +
                 ", city='" + city + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", issueNumber=" + issue +
