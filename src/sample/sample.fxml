@@ -12,11 +12,13 @@
    <center>
       <TableView fx:id="tableView" prefHeight="175.0" prefWidth="500.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="titleTableColumn" prefWidth="75.0" text="Title" />
-          <TableColumn fx:id="authorTableColumn" prefWidth="75.0" text="Author" />
-          <TableColumn fx:id="isbnTableColumn" prefWidth="75.0" text="ISBN" />
-          <TableColumn fx:id="publicationDateTableColumn" prefWidth="100.0" text="publication date" />
-          <TableColumn fx:id="issueNumberTableColumn" minWidth="8.0" prefWidth="100.0" text="issue number" />
+          <TableColumn fx:id="authorTC" prefWidth="75.0" text="Autor" />
+          <TableColumn fx:id="titleTC" prefWidth="75.0" text="Tytuł" />
+          <TableColumn fx:id="publicationDateTC" prefWidth="88.0" text="Rok wydania" />
+          <TableColumn fx:id="cityTC" prefWidth="87.0" text="Miasto" />
+          <TableColumn fx:id="publisherTC" minWidth="8.0" prefWidth="75.0" text="Wydawca" />
+            <TableColumn fx:id="issueTC" prefWidth="100.0" text="Numer wydania" />
+            <TableColumn fx:id="conditionTC" prefWidth="75.0" text="Stan" />
         </columns>
       </TableView>
    </center>
@@ -56,32 +58,44 @@
                   </Label>
                   <HBox prefHeight="25.0" prefWidth="325.0">
                      <children>
-                        <Label text="Title" />
-                        <TextField fx:id="titleTF" />
-                     </children>
-                  </HBox>
-                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="200.0">
-                     <children>
-                        <Label text="Author" />
+                        <Label text="Autor" />
                         <TextField fx:id="authorTF" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="200.0">
                      <children>
-                        <Label text="ISBN" />
-                        <TextField fx:id="isbnTF" />
+                        <Label text="Tytuł" />
+                        <TextField fx:id="titleTF" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Rok wyd." />
+                        <TextField fx:id="publicationDateTF" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="110.0" prefHeight="25.0" prefWidth="325.0">
                      <children>
-                        <Label text="pub. date" />
-                        <TextField fx:id="publicationDateTF" />
+                        <Label text="Miasto" />
+                        <TextField fx:id="cityTF" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="110.0" prefHeight="25.0" prefWidth="200.0">
                      <children>
-                        <Label text="issue" />
+                        <Label text="Wydawca" />
+                        <TextField fx:id="publisherTF" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="147.0" prefHeight="25.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Nr wyd." />
                         <TextField fx:id="issueTF" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="197.0" prefHeight="25.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Stan" />
+                        <TextField fx:id="conditionTF" />
                      </children>
                   </HBox>
                   <Button mnemonicParsing="false" onMouseClicked="#addButtonClicked" text="Add" />

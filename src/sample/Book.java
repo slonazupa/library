@@ -5,26 +5,32 @@ package sample;
  */
 public class Book {
 
-    private String title;
     private String author;
-    private String isbn;
+    private String title;
     private String publicationDate;
-    private int issueNumber;
+    private String city;
+    private String publisher;
+    private int issue;
+    private String condition;
 
     public Book() {
-        this.title = "";
         this.author = "";
-        this.isbn = "";
+        this.title = "";
+        this.city = "";
+        this.publisher = "";
         this.publicationDate = "";
-        this.issueNumber = 0;
+        this.issue = 0;
+        this.condition = "";
     }
 
-    public Book(String title, String author, String isbn, String publicationDate, int issueNumber) {
-        this.title = title;
+    public Book(String author, String title, String city, String publisher, String publicationDate, int issueNumber, String condition) {
         this.author = author;
-        this.isbn = isbn;
+        this.title = title;
+        this.city = city;
+        this.publisher = publisher;
         this.publicationDate = publicationDate;
-        this.issueNumber = issueNumber;
+        this.issue = issueNumber;
+        this.condition = condition;
     }
 
     public String getTitle() {
@@ -43,14 +49,6 @@ public class Book {
         this.author = author;
     }
 
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
     public String getPublicationDate() {
         return publicationDate;
     }
@@ -59,23 +57,48 @@ public class Book {
         this.publicationDate = publicationDate;
     }
 
-    public int getIssueNumber() {
-        return issueNumber;
+    public int getIssue() {
+        return issue;
     }
 
-    public void setIssueNumber(int issueNumber) {
-        this.issueNumber = issueNumber;
+    public void setIssue(int issue) {
+        this.issue = issue;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
 
     @Override
     public String toString() {
         return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", isbn='" + isbn + '\'' +
+                "author='" + author + '\'' +
+                ", title='" + title + '\'' +
                 ", publicationDate='" + publicationDate + '\'' +
-                ", issueNumber=" + issueNumber +
+                ", city='" + city + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", issueNumber=" + issue +
+                ", condition='" + condition + '\'' +
                 '}';
     }
 }
