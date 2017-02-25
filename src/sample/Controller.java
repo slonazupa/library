@@ -9,16 +9,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import model.Book;
 
 
 import java.io.*;
 import java.net.URL;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable{
@@ -55,15 +51,42 @@ public class Controller implements Initializable{
         issueTC.setCellValueFactory(new PropertyValueFactory<>("issue"));
         conditionTC.setCellValueFactory(new PropertyValueFactory<>("condition"));
         tableView.setItems(getBooks());
-        openFile();
+        //openFile();
     }
 
     private ObservableList<Book> getBooks() {
         return books;
     }
 
-    private void addBook(Book book){
-        books.add(book);
+    //opens the file where you can save information about books. If the file does not exist create it
+    private void openFile(){
+
+        //Path path = Paths.get(filePathString);
+        try {
+
+            FileInputStream fi = new FileInputStream(new File(filePathString));
+            //ObjectInputStream oi = new ObjectInputStream(fi);
+            ObjectInputStream oi = null;// = new ObjectInputStream(fi);
+
+            while (fi.available()>0){
+                oi = new ObjectInputStream(fi);
+                Book book = (Book) oi.readObject();
+                books.add(book);
+                System.out.println(book);
+            }
+
+            oi.close();
+            fi.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error initializing stream");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void addButtonClicked(MouseEvent mouseEvent) {
@@ -109,34 +132,32 @@ public class Controller implements Initializable{
         issueTF.clear();
     }
 
-    //opens the file where you can save information about books. If the file does not exist create it
-    private void openFile(){
+    public void deleteButtonClicked(){
+        ObservableList<Book> bookSelected, allBooks;
+        allBooks = tableView.getItems();
+        bookSelected = tableView.getSelectionModel().getSelectedItems();
 
-        //Path path = Paths.get(filePathString);
+        bookSelected.forEach(getBooks()::remove);
+
+        System.out.println(getBooks());
+
         try {
+            File file = new File(filePathString);
+            FileOutputStream f = new FileOutputStream(file, false);
+            ObjectOutputStream o = new ObjectOutputStream(f);
 
-            FileInputStream fi = new FileInputStream(new File(filePathString));
-            //ObjectInputStream oi = new ObjectInputStream(fi);
-            ObjectInputStream oi;// = new ObjectInputStream(fi);
-
-            while (fi.available()>0){
-                oi = new ObjectInputStream(fi);
-                Book book = (Book) oi.readObject();
-                books.add(book);
-                System.out.println(book);
+            for(int i= 0; i< getBooks().size(); i++){
+                o.writeObject(getBooks().get(i));
             }
 
-            //oi.close();
-            fi.close();
+            o.close();
+            f.close();
 
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             System.out.println("Error initializing stream");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-
+        System.out.println(getBooks());
     }
 }

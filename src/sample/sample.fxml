@@ -103,4 +103,7 @@
             </VBox>
          </children></AnchorPane>
    </right>
+   <bottom>
+      <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#deleteButtonClicked" text="Usuń" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>

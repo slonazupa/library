@@ -1,12 +1,13 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class Main extends Application {
 
@@ -21,6 +22,13 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        //String dbName = "libdb";
+        //Connection connect = connect(dbName);
+        DBController conn = new DBController();
+        conn.createTables();
+        conn.insertBook();
+        System.out.println(conn.selectBooks());
+        //conn.closeConnection();
         launch(args);
     }
 }
