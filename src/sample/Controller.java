@@ -30,6 +30,7 @@ public class Controller implements Initializable{
 
     private ObservableList<Book> books = FXCollections.observableArrayList();
     private String filePathString = "database.bin";
+    private DBController conn = new DBController();
 
     @FXML private TableView <Book> tableView;
     @FXML private TableColumn <Book, String> authorTC;
@@ -51,42 +52,18 @@ public class Controller implements Initializable{
         issueTC.setCellValueFactory(new PropertyValueFactory<>("issue"));
         conditionTC.setCellValueFactory(new PropertyValueFactory<>("condition"));
         tableView.setItems(getBooks());
-        //openFile();
+        loadData();
+    }
+
+    private void loadData() {
+
+        ObservableList<Book> data = FXCollections.observableArrayList(conn.selectBooks());
+        tableView.setItems(data);
+
     }
 
     private ObservableList<Book> getBooks() {
         return books;
-    }
-
-    //opens the file where you can save information about books. If the file does not exist create it
-    private void openFile(){
-
-        //Path path = Paths.get(filePathString);
-        try {
-
-            FileInputStream fi = new FileInputStream(new File(filePathString));
-            //ObjectInputStream oi = new ObjectInputStream(fi);
-            ObjectInputStream oi = null;// = new ObjectInputStream(fi);
-
-            while (fi.available()>0){
-                oi = new ObjectInputStream(fi);
-                Book book = (Book) oi.readObject();
-                books.add(book);
-                System.out.println(book);
-            }
-
-            oi.close();
-            fi.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Error initializing stream");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public void addButtonClicked(MouseEvent mouseEvent) {
@@ -96,32 +73,19 @@ public class Controller implements Initializable{
         String publisher = publisherTF.getText();
         String publicationDateString = publicationDateTF.getText();
         int publicationDate = Integer.parseInt(publicationDateString);
-        String condition = conditionTF.getText();
+        String conditionString = conditionTF.getText();
+        int condition =  Integer.parseInt(conditionString);
         String issueString = issueTF.getText();
         int issue =  Integer.parseInt(issueString);
 
+        //conn = new DBController();
+        conn.insertBook(author, title, city, publisher, publicationDate, issue, condition);
+        System.out.println(conn.selectBooks());
+        loadData();
         //String author, String title, String city, String publisher, String publicationDate, int issueNumber, String condition
         //books.add(new Book(author, title, city, publisher, publicationDate, issue, condition));
 
-        try {
 
-            File file = new File(filePathString);
-            file.createNewFile(); // if file already exists will do nothing
-            FileOutputStream f = new FileOutputStream(file, true);
-            ObjectOutputStream o = new ObjectOutputStream(f);
-
-            Book book = new Book(author, title, city, publisher, publicationDate, issue, condition);
-            books.add(book);
-            o.writeObject(book);
-            o.close();
-            f.close();
-
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        } catch (IOException e) {
-            System.out.println("Error initializing stream");
-        }
 
         authorTF.clear();
         titleTF.clear();
@@ -136,28 +100,11 @@ public class Controller implements Initializable{
         ObservableList<Book> bookSelected, allBooks;
         allBooks = tableView.getItems();
         bookSelected = tableView.getSelectionModel().getSelectedItems();
+        Book book = (Book)tableView.getSelectionModel().getSelectedItems();
+        book.getId();
 
         bookSelected.forEach(getBooks()::remove);
 
-        System.out.println(getBooks());
 
-        try {
-            File file = new File(filePathString);
-            FileOutputStream f = new FileOutputStream(file, false);
-            ObjectOutputStream o = new ObjectOutputStream(f);
-
-            for(int i= 0; i< getBooks().size(); i++){
-                o.writeObject(getBooks().get(i));
-            }
-
-            o.close();
-            f.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        } catch (IOException e) {
-            System.out.println("Error initializing stream");
-        }
-        System.out.println(getBooks());
     }
 }

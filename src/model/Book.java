@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class Book implements Serializable{
 
+    private int id;
     private String author;
     private String title;
     private int publicationDate;
@@ -33,6 +34,17 @@ public class Book implements Serializable{
         this.publicationDate = publicationDate;
         this.issue = issueNumber;
         this.condition = condition;
+    }
+
+    public Book(int id, String author, String title, String city, String publisher, int publicationDate, int issue, int condition) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.city = city;
+        this.publisher = publisher;
+        this.publicationDate = publicationDate;
+        this.issue = issue;
+        this.condition = Integer.toString(condition);
     }
 
     public Book(String author, String title, String city, String publisher, int publicationDate, int issue, int condition) {
@@ -100,6 +112,15 @@ public class Book implements Serializable{
     public void setCondition(String condition) {
         this.condition = condition;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     @Override
     public String toString() {

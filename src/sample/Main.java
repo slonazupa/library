@@ -24,10 +24,10 @@ public class Main extends Application {
     public static void main(String[] args) {
         //String dbName = "libdb";
         //Connection connect = connect(dbName);
-        DBController conn = new DBController();
-        conn.createTables();
-        conn.insertBook();
-        System.out.println(conn.selectBooks());
+        //DBController conn = new DBController();
+        //conn.createTables();
+        //conn.insertBook();
+        //System.out.println(conn.selectBooks());
         //conn.closeConnection();
         launch(args);
     }

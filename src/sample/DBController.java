@@ -48,20 +48,20 @@ public class DBController {
         return true;
     }
 
-    public boolean insertBook(){
+    public boolean insertBook(String author, String title, String city, String publisher, int publicationDate, int issue, int condition){
         try {
             //(author, title, city, publisher, publicationDate, issue, condition);
             PreparedStatement prepStmt = conn.prepareStatement("insert into book values (NULL, ?, ?, ?, ?, ?, ?, ?);");
-            prepStmt.setString(1, "test");
-            prepStmt.setString(2, "test");
-            prepStmt.setString(3, "test");
-            prepStmt.setString(4, "test");
-            prepStmt.setString(5, "1");
-            prepStmt.setString(6, "1");
-            prepStmt.setString(7, "1");
+            prepStmt.setString(1, author);
+            prepStmt.setString(2, title);
+            prepStmt.setString(3, city);
+            prepStmt.setString(4, publisher);
+            prepStmt.setString(5, Integer.toString(publicationDate));
+            prepStmt.setString(6, Integer.toString(issue));
+            prepStmt.setString(7, Integer.toString(condition));
             prepStmt.execute();
         } catch (SQLException e) {
-            System.err.println("Blad przy wstawianiu czytelnika");
+            System.err.println("Blad przy wstawianiu ksiazki");
             e.printStackTrace();
             return false;
         }
