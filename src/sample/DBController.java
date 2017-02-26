@@ -151,7 +151,8 @@ public class DBController {
             //ResultSet result = stat.executeQuery("SELECT * FROM book WHERE ? IN (author, title, city, publisher, publicationDate, issue, condition)");
 
             String sql;
-            sql = "SELECT * FROM book WHERE '" + searchText + "' IN (author, title, city, publisher, publicationDate, issue, condition)";
+            //sql = "SELECT * FROM book WHERE '" + searchText + "' IN (author, title, city, publisher, publicationDate, issue, condition)";
+            sql = "SELECT  * FROM book WHERE author LIKE '%" + searchText + "%' or title LIKE '%" + searchText + "%' or city LIKE '%" + searchText + "%' or publisher LIKE '%" + searchText + "%' or publicationDate LIKE '%" + searchText + "%'or issue LIKE '%" + searchText + "%'or condition LIKE '%" + searchText + "%'";
             System.out.println(sql);
             ResultSet result = stat.executeQuery(sql);
             int id, publicationDate, issue, condition;
