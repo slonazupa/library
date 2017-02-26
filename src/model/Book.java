@@ -125,12 +125,13 @@ public class Book implements Serializable{
     @Override
     public String toString() {
         return "Book{" +
-                "author='" + author + '\'' +
+                "id=" + id +
+                ", author='" + author + '\'' +
                 ", title='" + title + '\'' +
-                ", publicationDate='" + publicationDate +
+                ", publicationDate=" + publicationDate +
                 ", city='" + city + '\'' +
                 ", publisher='" + publisher + '\'' +
-                ", issueNumber=" + issue +
+                ", issue=" + issue +
                 ", condition='" + condition + '\'' +
                 '}';
     }

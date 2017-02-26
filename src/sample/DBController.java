@@ -78,11 +78,24 @@ public class DBController {
         }
     }
 
+    public boolean deleteBook(int id){
+        try{
+            PreparedStatement prepStmt = conn.prepareStatement("DELETE FROM book WHERE id_book=?");
+            prepStmt.setString(1, String.valueOf(id));
+            prepStmt.execute();
+        }catch (SQLException e){
+            System.err.println("Blad przy usuwaniu ksiazki");
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     public List<Book> selectBooks() {
         List<Book> books = new ArrayList<>();
         try {
             //(author, title, city, publisher, publicationDate, issue, condition);
+
             ResultSet result = stat.executeQuery("SELECT * FROM book");
             int id, publicationDate, issue, condition;
             String author, title, city, publisher;
@@ -96,7 +109,64 @@ public class DBController {
                 issue = result.getInt("issue");
                 condition = result.getInt("condition");
 
-                books.add(new Book(author, title, city, publisher, publicationDate, issue, condition));
+                books.add(new Book(id, author, title, city, publisher, publicationDate, issue, condition));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return books;
+    }
+
+    public boolean updateBook(int id, String author, String title, String city, String publisher, int publicationDate, int condition, int issue) {
+        try {
+            //(author, title, city, publisher, publicationDate, issue, condition);
+            PreparedStatement prepStmt = conn.prepareStatement("UPDATE book set author = ?, title = ?, city = ?,publisher = ?, publicationDate = ?, issue = ?, condition = ? WHERE id_book = ?;");
+            prepStmt.setString(1, author);
+            prepStmt.setString(2, title);
+            prepStmt.setString(3, city);
+            prepStmt.setString(4, publisher);
+            prepStmt.setString(5, Integer.toString(publicationDate));
+            prepStmt.setString(6, Integer.toString(issue));
+            prepStmt.setString(7, Integer.toString(condition));
+            prepStmt.setString(8, Integer.toString(id));
+            prepStmt.execute();
+        } catch (SQLException e) {
+            System.err.println("Blad przy modyfikacji ksiazki");
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    public List<Book> searchText(String searchText) {
+        List<Book> books = new ArrayList<>();
+        try {
+            //(author, title, city, publisher, publicationDate, issue, condition);
+            //PreparedStatement prepStmt = conn.prepareStatement("SELECT * FROM book WHERE ? IN (author, title, city, publisher, publicationDate, issue, condition)");
+            //prepStmt.setString(1, searchText);
+            //ResultSet result = null;
+            //result.execute(prepStmt);
+            //ResultSet result = stat.executeQuery("SELECT * FROM book WHERE ? IN (author, title, city, publisher, publicationDate, issue, condition)");
+
+            String sql;
+            sql = "SELECT * FROM book WHERE '" + searchText + "' IN (author, title, city, publisher, publicationDate, issue, condition)";
+            System.out.println(sql);
+            ResultSet result = stat.executeQuery(sql);
+            int id, publicationDate, issue, condition;
+            String author, title, city, publisher;
+            while(result.next()) {
+                id = result.getInt("id_book");
+                title = result.getString("title");
+                author = result.getString("author");
+                city = result.getString("city");
+                publisher = result.getString("publisher");
+                publicationDate = result.getInt("publicationDate");
+                issue = result.getInt("issue");
+                condition = result.getInt("condition");
+
+                books.add(new Book(id, author, title, city, publisher, publicationDate, issue, condition));
             }
         } catch (SQLException e) {
             e.printStackTrace();

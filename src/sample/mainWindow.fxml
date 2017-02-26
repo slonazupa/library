@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns:aaa="http://javafx.com/javafx/8" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <center>
+      <TableView fx:id="tableView" prefHeight="175.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+        <columns>
+            <TableColumn fx:id="idTC" prefWidth="38.0" text="Id" />
+          <TableColumn fx:id="authorTC" prefWidth="125.0" text="Autor" />
+          <TableColumn fx:id="titleTC" prefWidth="103.0" text="Tytuł" />
+          <TableColumn fx:id="publicationDateTC" prefWidth="87.0" text="Rok wydania" />
+          <TableColumn fx:id="cityTC" prefWidth="120.0" text="Miasto" />
+          <TableColumn fx:id="publisherTC" minWidth="8.0" prefWidth="139.0" text="Wydawca" />
+            <TableColumn fx:id="issueTC" minWidth="0.0" prefWidth="55.0" text="Numer wydania" />
+            <TableColumn fx:id="conditionTC" prefWidth="46.0" text="Stan" />
+        </columns>
+      </TableView>
+   </center>
+   <top>
+      <VBox prefHeight="25.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#deleteButtonClicked" text="Usuń" />
+                  <TextField fx:id="searchTF" />
+                  <Button fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#searchButtonClicked" text="Szukaj" />
+                  <Button fx:id="allBooksButton" mnemonicParsing="false" onMouseClicked="#allBooksButtonClicked" text="Wszystkie ksiązki" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <TabPane prefHeight="135.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab fx:id="addTab" text="Dodaj">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="171.0" prefWidth="750.0">
+                           <children>
+                              <VBox prefHeight="62.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="Autor" />
+                                    <TextField fx:id="authorTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="Tytuł" />
+                                    <TextField fx:id="titleTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="76.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="Rok wyd." />
+                                    <TextField fx:id="publicationDateTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="Miasto" />
+                                    <TextField fx:id="cityTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="Wydawca" />
+                                    <TextField fx:id="publisherTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="Nr wyd." />
+                                    <TextField fx:id="issueTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="Stan" />
+                                    <TextField fx:id="conditionTF" />
+                                 </children>
+                              </VBox>
+                              <Button mnemonicParsing="false" onMouseClicked="#addButtonClicked" text="Dodaj">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <HBox.margin>
+                                    <Insets top="16.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="editTab" text="Edytuj">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="171.0" prefWidth="750.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="40.0">
+                                 <children>
+                                    <Label text="Id" />
+                                    <TextField fx:id="idEditTF" editable="false" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="62.0" prefWidth="90.0">
+                                 <children>
+                                    <Label text="Autor" />
+                                    <TextField fx:id="authorEditTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="90.0">
+                                 <children>
+                                    <Label text="Tytuł" />
+                                    <TextField fx:id="titleEditTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="76.0" prefWidth="90.0">
+                                 <children>
+                                    <Label text="Rok wyd." />
+                                    <TextField fx:id="publicationDateEditTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="90.0">
+                                 <children>
+                                    <Label text="Miasto" />
+                                    <TextField fx:id="cityEditTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="90.0">
+                                 <children>
+                                    <Label text="Wydawca" />
+                                    <TextField fx:id="publisherEditTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="90.0">
+                                 <children>
+                                    <Label text="Nr wyd." />
+                                    <TextField fx:id="issueEditTF" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="90.0">
+                                 <children>
+                                    <Label text="Stan" />
+                                    <TextField fx:id="conditionEditTF" />
+                                 </children>
+                              </VBox>
+                              <Button mnemonicParsing="false" onMouseClicked="#addEditButtonClicked" text="Zapisz">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <HBox.margin>
+                                    <Insets top="16.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </bottom>
+</BorderPane>

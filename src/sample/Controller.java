@@ -4,10 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import model.Book;
 
@@ -15,6 +14,7 @@ import model.Book;
 import java.io.*;
 import java.net.URL;
 
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable{
@@ -27,12 +27,22 @@ public class Controller implements Initializable{
     public TextField issueTF;
     public TextField conditionTF;
 
+    public TextField idEditTF;
+    public TextField authorEditTF;
+    public TextField titleEditTF;
+    public TextField cityEditTF;
+    public TextField publisherEditTF;
+    public TextField publicationDateEditTF;
+    public TextField issueEditTF;
+    public TextField conditionEditTF;
+    public TextField searchTF;
 
     private ObservableList<Book> books = FXCollections.observableArrayList();
     private String filePathString = "database.bin";
     private DBController conn = new DBController();
 
     @FXML private TableView <Book> tableView;
+    @FXML private  TableColumn <Book, Integer> idTC;
     @FXML private TableColumn <Book, String> authorTC;
     @FXML private TableColumn <Book, String> titleTC;
     @FXML private TableColumn <Book, String> cityTC;
@@ -44,6 +54,7 @@ public class Controller implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        idTC.setCellValueFactory(new PropertyValueFactory<>("id"));
         authorTC.setCellValueFactory(new PropertyValueFactory<>("author"));
         titleTC.setCellValueFactory(new PropertyValueFactory<>("title"));
         cityTC.setCellValueFactory(new PropertyValueFactory<>("city"));
@@ -52,7 +63,31 @@ public class Controller implements Initializable{
         issueTC.setCellValueFactory(new PropertyValueFactory<>("issue"));
         conditionTC.setCellValueFactory(new PropertyValueFactory<>("condition"));
         tableView.setItems(getBooks());
+        tableView.setRowFactory(tv -> {
+            TableRow<Book> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
+                        && event.getClickCount() == 2) {
+
+                    Book clickedRow = row.getItem();
+                    System.out.println(clickedRow);
+                    printRow(clickedRow);
+                }
+            });
+            return row ;
+        });
         loadData();
+    }
+
+    private void printRow(Book book){
+        idEditTF.setText(String.valueOf(book.getId()));
+        authorEditTF.setText(book.getAuthor());
+        titleEditTF.setText(book.getTitle());
+        cityEditTF.setText(book.getCity());
+        publisherEditTF.setText(book.getPublisher());
+        publicationDateEditTF.setText(String.valueOf(book.getPublicationDate()));
+        issueEditTF.setText(String.valueOf(book.getIssue()));
+        conditionEditTF.setText(book.getCondition());
     }
 
     private void loadData() {
@@ -85,8 +120,6 @@ public class Controller implements Initializable{
         //String author, String title, String city, String publisher, String publicationDate, int issueNumber, String condition
         //books.add(new Book(author, title, city, publisher, publicationDate, issue, condition));
 
-
-
         authorTF.clear();
         titleTF.clear();
         cityTF.clear();
@@ -98,13 +131,50 @@ public class Controller implements Initializable{
 
     public void deleteButtonClicked(){
         ObservableList<Book> bookSelected, allBooks;
-        allBooks = tableView.getItems();
-        bookSelected = tableView.getSelectionModel().getSelectedItems();
-        Book book = (Book)tableView.getSelectionModel().getSelectedItems();
-        book.getId();
 
-        bookSelected.forEach(getBooks()::remove);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Potwierdzenie");
+        alert.setHeaderText("Potwierdź swój wybór");
+        alert.setContentText("Czy na pewno usunąć?");
 
+        Optional<ButtonType> result = alert.showAndWait();
 
+        if (result.get() == ButtonType.OK){
+            bookSelected = tableView.getSelectionModel().getSelectedItems();
+            Book book = bookSelected.get(0);
+            conn.deleteBook(book.getId());
+            loadData();
+        }
+
+        //allBooks = tableView.getItems();
+    }
+
+    public void addEditButtonClicked(MouseEvent mouseEvent) {
+        String idString = idEditTF.getText();
+        int id = Integer.parseInt(idString);
+        String author = authorEditTF.getText();
+        String title = titleEditTF.getText();
+        String city = cityEditTF.getText();
+        String publisher = publisherEditTF.getText();
+        String publicationDateString = publicationDateEditTF.getText();
+        int publicationDate = Integer.parseInt(publicationDateString);
+        String conditionString = conditionEditTF.getText();
+        int condition =  Integer.parseInt(conditionString);
+        String issueString = issueEditTF.getText();
+        int issue =  Integer.parseInt(issueString);
+
+        conn.updateBook(id, author, title, city, publisher, publicationDate, condition, issue);
+        loadData();
+    }
+
+    public void searchButtonClicked(MouseEvent mouseEvent) {
+        String searchText = searchTF.getText();
+
+        ObservableList<Book> data = FXCollections.observableArrayList(conn.searchText(searchText));
+        tableView.setItems(data);
+    }
+
+    public void allBooksButtonClicked(MouseEvent mouseEvent) {
+        loadData();
     }
 }
