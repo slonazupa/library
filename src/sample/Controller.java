@@ -50,6 +50,7 @@ public class Controller implements Initializable{
     @FXML private TableColumn <Book, String> publicationDateTC;
     @FXML private TableColumn <Book, Integer> issueTC;
     @FXML private TableColumn <Book, String> conditionTC;
+    @FXML private TableColumn <Book, String> addTimeTC;
 
 
     @Override
@@ -62,6 +63,7 @@ public class Controller implements Initializable{
         publicationDateTC.setCellValueFactory(new PropertyValueFactory<>("publicationDate"));
         issueTC.setCellValueFactory(new PropertyValueFactory<>("issue"));
         conditionTC.setCellValueFactory(new PropertyValueFactory<>("condition"));
+        addTimeTC.setCellValueFactory(new PropertyValueFactory<>("addTime"));
         tableView.setItems(getBooks());
         tableView.setRowFactory(tv -> {
             TableRow<Book> row = new TableRow<>();
@@ -76,6 +78,8 @@ public class Controller implements Initializable{
             });
             return row ;
         });
+
+        conn.createTables();
         loadData();
     }
 

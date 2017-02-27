@@ -17,6 +17,7 @@
           <TableColumn fx:id="publisherTC" minWidth="8.0" prefWidth="139.0" text="Wydawca" />
             <TableColumn fx:id="issueTC" minWidth="0.0" prefWidth="55.0" text="Numer wydania" />
             <TableColumn fx:id="conditionTC" prefWidth="46.0" text="Stan" />
+            <TableColumn fx:id="addTimeTC" prefWidth="150.0" text="Data dodania" />
         </columns>
       </TableView>
    </center>

@@ -15,6 +15,7 @@ public class Book implements Serializable{
     private String publisher;
     private int issue;
     private String condition;
+    private String addTime;
 
     public Book(String author, String title, String city, String publisher, String publicationDate, int issueNumber, String condition) {
         this.author = "";
@@ -36,7 +37,7 @@ public class Book implements Serializable{
         this.condition = condition;
     }
 
-    public Book(int id, String author, String title, String city, String publisher, int publicationDate, int issue, int condition) {
+    public Book(int id, String author, String title, String city, String publisher, int publicationDate, int issue, int condition, String addTime) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -45,6 +46,7 @@ public class Book implements Serializable{
         this.publicationDate = publicationDate;
         this.issue = issue;
         this.condition = Integer.toString(condition);
+        this.addTime = addTime;
     }
 
     public Book(String author, String title, String city, String publisher, int publicationDate, int issue, int condition) {
@@ -56,6 +58,8 @@ public class Book implements Serializable{
         this.issue = issue;
         this.condition = Integer.toString(condition);
     }
+
+
 
     public String getTitle() {
         return title;
@@ -121,6 +125,13 @@ public class Book implements Serializable{
         this.id = id;
     }
 
+    public String getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
+    }
 
     @Override
     public String toString() {
@@ -133,6 +144,7 @@ public class Book implements Serializable{
                 ", publisher='" + publisher + '\'' +
                 ", issue=" + issue +
                 ", condition='" + condition + '\'' +
+                ", time='" + addTime + '\'' +
                 '}';
     }
 }

@@ -37,7 +37,7 @@ public class DBController {
     public boolean createTables(){
         //(id_czytelnika INTEGER PRIMARY KEY AUTOINCREMENT, imie varchar(255), nazwisko varchar(255), pesel int)";
         //Book(author, title, city, publisher, publicationDate, issue, condition);
-        String createBook = "CREATE TABLE IF NOT EXISTS book (id_book INTEGER PRIMARY KEY AUTOINCREMENT, author varchar(255), title varchar(255), city varchar(255), publisher varchar(255), publicationDate int, issue int, condition int)";
+        String createBook = "CREATE TABLE IF NOT EXISTS book (id_book INTEGER PRIMARY KEY AUTOINCREMENT, author varchar(255), title varchar(255), city varchar(255), publisher varchar(255), publicationDate int, issue int, condition int, sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)";
         try{
             stat.execute(createBook);
             System.out.println("Stworzono tabele");
@@ -51,7 +51,7 @@ public class DBController {
     public boolean insertBook(String author, String title, String city, String publisher, int publicationDate, int issue, int condition){
         try {
             //(author, title, city, publisher, publicationDate, issue, condition);
-            PreparedStatement prepStmt = conn.prepareStatement("insert into book values (NULL, ?, ?, ?, ?, ?, ?, ?);");
+            PreparedStatement prepStmt = conn.prepareStatement("insert into book (id_book, author, title, city, publisher, publicationDate, issue, condition) values (NULL, ?, ?, ?, ?, ?, ?, ?);");
             prepStmt.setString(1, author);
             prepStmt.setString(2, title);
             prepStmt.setString(3, city);
@@ -61,6 +61,7 @@ public class DBController {
             prepStmt.setString(7, Integer.toString(condition));
             prepStmt.execute();
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             System.err.println("Blad przy wstawianiu ksiazki");
             e.printStackTrace();
             return false;
@@ -98,7 +99,7 @@ public class DBController {
 
             ResultSet result = stat.executeQuery("SELECT * FROM book");
             int id, publicationDate, issue, condition;
-            String author, title, city, publisher;
+            String author, title, city, publisher, addTime;
             while(result.next()) {
                 id = result.getInt("id_book");
                 title = result.getString("title");
@@ -108,8 +109,9 @@ public class DBController {
                 publicationDate = result.getInt("publicationDate");
                 issue = result.getInt("issue");
                 condition = result.getInt("condition");
+                addTime = result.getString("sqltime");
 
-                books.add(new Book(id, author, title, city, publisher, publicationDate, issue, condition));
+                books.add(new Book(id, author, title, city, publisher, publicationDate, issue, condition, addTime));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -153,10 +155,10 @@ public class DBController {
             String sql;
             //sql = "SELECT * FROM book WHERE '" + searchText + "' IN (author, title, city, publisher, publicationDate, issue, condition)";
             sql = "SELECT  * FROM book WHERE author LIKE '%" + searchText + "%' or title LIKE '%" + searchText + "%' or city LIKE '%" + searchText + "%' or publisher LIKE '%" + searchText + "%' or publicationDate LIKE '%" + searchText + "%'or issue LIKE '%" + searchText + "%'or condition LIKE '%" + searchText + "%'";
-            System.out.println(sql);
+            //System.out.println(sql);
             ResultSet result = stat.executeQuery(sql);
             int id, publicationDate, issue, condition;
-            String author, title, city, publisher;
+            String author, title, city, publisher, addTime;
             while(result.next()) {
                 id = result.getInt("id_book");
                 title = result.getString("title");
@@ -166,13 +168,27 @@ public class DBController {
                 publicationDate = result.getInt("publicationDate");
                 issue = result.getInt("issue");
                 condition = result.getInt("condition");
+                addTime = result.getString("sqltime");
 
-                books.add(new Book(id, author, title, city, publisher, publicationDate, issue, condition));
+                books.add(new Book(id, author, title, city, publisher, publicationDate, issue, condition, addTime));
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
         return books;
+    }
+
+    public boolean addTable(){
+        String createBook = "ALTER TABLE book ADD COLUMN sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL";
+        try{
+            stat.execute(createBook);
+            System.out.println("Dodano tabele");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

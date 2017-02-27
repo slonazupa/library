@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 public class Main extends Application {
 
     @Override
@@ -19,13 +21,14 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        //String dbName = "libdb";
+        //String dbName = "libdb.db";
         //Connection connect = connect(dbName);
         //DBController conn = new DBController();
         //conn.createTables();
         //conn.insertBook();
         //System.out.println(conn.selectBooks());
         //conn.closeConnection();
+
         launch(args);
     }
 }
